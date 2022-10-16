@@ -1,0 +1,35 @@
+services:
+  database:
+    image: 
+      postgres
+    network_mode: bridge
+    ports:
+       - 5432:5432
+    volumes: 
+      - pgdata:/var/lib/postgres/data
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=prisma
+  # cms:
+  #   depends_on: 
+  #     - database
+  #   network_mode: bridge
+  #   container_name: nestjs_api_dev
+  #   image: nestjs-api-dev:1.0.0
+  #   build:
+  #     context: .
+  #     target: development
+  #     dockerfile: ./Dockerfile
+  #   command: yarn run start:dev
+  #   volumes:
+  #     - .:/usr/src/app
+  #   ports:
+  #     - 3000:3000
+  #     - 9229:9229
+networks:
+  postgres:
+    driver: bridge
+    
+volumes:
+  pgdata:
