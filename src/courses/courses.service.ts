@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Course, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -14,7 +14,7 @@ export class CoursesService {
     }
   }
 
-  async addCourse(name: string, courseDetails: string) {
+  async addCourse({ name, courseDetails }: Partial<Course>) {
     try {
       const newCourse = await prisma.course.create({
         data: {
@@ -35,6 +35,7 @@ export class CoursesService {
         id: courseId,
       },
     });
+
     if (!course)
       throw new HttpException('Cannot find course', HttpStatus.NOT_FOUND);
     return course;

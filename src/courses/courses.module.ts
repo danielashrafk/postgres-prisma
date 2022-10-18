@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { CoursesContorller } from './courses.controller';
+import { CoursesController } from './courses.controller';
 import { CoursesService } from './courses.service';
-import { CourseExistsRule } from './dto/courseExists';
 
 @Module({
-  controllers: [CoursesContorller],
-  providers: [CoursesService, CourseExistsRule],
+  controllers: [CoursesController],
+  providers: [CoursesService],
 })
 export class CoursesModule {}

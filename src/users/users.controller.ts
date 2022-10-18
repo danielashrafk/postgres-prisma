@@ -29,12 +29,7 @@ export class UsersController {
   @Post()
   @UsePipes(ValidationPipe)
   async addUser(@Body() userData: createUserDto) {
-    const addedUser = await this.usersService.addUser(
-      userData.email,
-      userData.firstName,
-      userData.lastName,
-      userData.social,
-    );
+    const addedUser = await this.usersService.addUser(userData);
 
     if (addedUser['success']) return { user: addedUser['message'] };
     else

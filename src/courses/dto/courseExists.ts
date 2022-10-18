@@ -13,6 +13,7 @@ export class CourseExistsRule implements ValidatorConstraintInterface {
 
   async validate(courseId: string) {
     try {
+      console.log(this.courseService);
       await this.courseService.findCourse(courseId);
     } catch (e) {
       return false;

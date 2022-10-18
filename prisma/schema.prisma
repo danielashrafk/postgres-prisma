@@ -18,7 +18,7 @@ model User {
   firstName   String
   lastName    String
   social      Json?
-  courses     courseEnrollment[]
+  courses     CourseEnrollment[]
   testResults TestResult[]       @relation(name: "results")
   testsGraded TestResult[]       @relation(name: "graded")
 }
@@ -27,7 +27,7 @@ model Course {
   id            String             @id @default(uuid())
   name          String
   courseDetails String
-  members       courseEnrollment[]
+  members       CourseEnrollment[]
   tests         Test[]
 }
 
@@ -53,7 +53,7 @@ model TestResult {
   gradedBy  User     @relation(name: "graded", fields: [graderId], references: [id])
 }
 
-model courseEnrollment {
+model CourseEnrollment {
   createdAt DateTime @default(now())
   role      UserRole
   userId    String

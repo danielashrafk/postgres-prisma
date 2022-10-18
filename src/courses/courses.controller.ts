@@ -12,7 +12,7 @@ import { CoursesService } from './courses.service';
 import { createCourseDto } from './dto/createCourse';
 
 @Controller('/courses')
-export class CoursesContorller {
+export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Get()
@@ -29,10 +29,7 @@ export class CoursesContorller {
   @Post()
   @UsePipes(ValidationPipe)
   async addCourse(@Body() courseData: createCourseDto) {
-    const addedCourse = await this.coursesService.addCourse(
-      courseData.name,
-      courseData.courseDetails,
-    );
+    const addedCourse = await this.coursesService.addCourse(courseData);
 
     if (addedCourse['success']) return { course: addedCourse['message'] };
     else

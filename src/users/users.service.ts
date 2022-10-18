@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { PrismaClient, User } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -16,12 +16,7 @@ export class UsersService {
     }
   }
 
-  async addUser(
-    email: string,
-    firstName: string,
-    lastName: string,
-    social: OptionalJSON<JSON>,
-  ) {
+  async addUser({ email, firstName, lastName, social }: Partial<User>) {
     try {
       const newUser = await prisma.user.create({
         data: {
@@ -36,5 +31,16 @@ export class UsersService {
     } catch (error) {
       return { success: false, message: error };
     }
+  }
+
+  async findUser(userId: string) {
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user)
+      throw new HttpException('Cannot find test', HttpStatus.NOT_FOUND);
+    return test;
   }
 }

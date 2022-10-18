@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { PrismaClient, Test } from '@prisma/client';
 import { dateToString } from 'src/utils/dates';
 
 const prisma = new PrismaClient();
@@ -15,9 +15,9 @@ export class TestsService {
     }
   }
 
-  async addTest(name: string, strDate: string, courseId: string) {
+  async addTest({ name, courseId }: Partial<Test>, _date: string) {
     try {
-      const date = dateToString(strDate);
+      const date = dateToString(_date);
       const newTest = await prisma.test.create({
         data: {
           name,
@@ -31,5 +31,16 @@ export class TestsService {
       console.log(error);
       return { success: false, message: error };
     }
+  }
+
+  async findTest(testId: string) {
+    const test = await prisma.test.findFirst({
+      where: {
+        id: testId,
+      },
+    });
+    if (!test)
+      throw new HttpException('Cannot find test', HttpStatus.NOT_FOUND);
+    return test;
   }
 }

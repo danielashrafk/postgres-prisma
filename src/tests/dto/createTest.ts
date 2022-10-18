@@ -8,6 +8,8 @@ export class createTestDto {
   @IsNotEmpty()
   @IsDateString()
   date: string;
+  @IsNotEmpty()
+  @IsString()
   @Validate(CourseExistsRule)
   courseId: string;
 }

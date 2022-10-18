@@ -30,9 +30,8 @@ export class TestsController {
   @UsePipes(ValidationPipe)
   async addTest(@Body() testData: createTestDto) {
     const addedTest = await this.testsService.addTest(
-      testData.name,
+      { name: testData.name, courseId: testData.courseId },
       testData.date,
-      testData.courseId,
     );
 
     if (addedTest['success']) return { test: addedTest['message'] };
