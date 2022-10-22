@@ -10,7 +10,7 @@ export class CoursesService {
       const courses = await prisma.course.findMany();
       return { success: true, message: courses };
     } catch (error) {
-      return { success: false, message: error };
+      return { success: false, message: error.message };
     }
   }
 
@@ -25,7 +25,7 @@ export class CoursesService {
 
       return { success: true, message: newCourse };
     } catch (error) {
-      return { success: false, message: error };
+      return { success: false, message: error.message };
     }
   }
 

@@ -10,7 +10,7 @@ export class CourseEnrollmentService {
       const courses = await prisma.courseEnrollment.findMany();
       return { success: true, message: courses };
     } catch (error) {
-      return { success: false, message: error };
+      return { success: false, message: error.message };
     }
   }
 
@@ -30,7 +30,7 @@ export class CourseEnrollmentService {
 
       return { success: true, message: newCourseEnrollment };
     } catch (error) {
-      return { success: false, message: error };
+      return { success: false, message: error.message };
     }
   }
 

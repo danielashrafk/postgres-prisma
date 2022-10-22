@@ -3,8 +3,6 @@ import { PrismaClient, User } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const { v1: uuidv1 } = require('uuid');
-
 @Injectable()
 export class UsersService {
   async getUsers() {
@@ -12,7 +10,7 @@ export class UsersService {
       const users = await prisma.user.findMany();
       return { success: true, message: users };
     } catch (error) {
-      return { success: false, message: error };
+      return { success: false, message: error.message };
     }
   }
 
@@ -29,18 +27,22 @@ export class UsersService {
 
       return { success: true, message: newUser };
     } catch (error) {
-      return { success: false, message: error };
+      return { success: false, message: error.message };
     }
   }
 
   async findUser(userId: string) {
-    const user = await prisma.user.findFirst({
-      where: {
-        id: userId,
-      },
-    });
-    if (!user)
-      throw new HttpException('Cannot find test', HttpStatus.NOT_FOUND);
-    return test;
+    try {
+      const user = await prisma.user.findFirst({
+        where: {
+          id: userId,
+        },
+      });
+      if (!user)
+        throw new HttpException('Cannot find user', HttpStatus.NOT_FOUND);
+      return { success: true, message: user };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
   }
 }

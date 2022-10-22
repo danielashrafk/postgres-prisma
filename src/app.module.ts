@@ -12,9 +12,17 @@ import { TestsService } from './tests/tests.service';
 import { UserExistsRule } from './users/dto/userExists';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
 
 @Module({
   imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'),
+      sortSchema: true,
+    }),
     UsersModule,
     CoursesModule,
     TestsModule,

@@ -31,7 +31,7 @@ export class UsersController {
   async addUser(@Body() userData: createUserDto) {
     const addedUser = await this.usersService.addUser(userData);
 
-    if (addedUser['success']) return { user: addedUser['message'] };
+    if (addedUser['success']) return addedUser;
     else
       throw new HttpException(
         'Cannot add user',

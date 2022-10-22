@@ -11,7 +11,7 @@ export class TestsService {
       const tests = await prisma.test.findMany();
       return { success: true, message: tests };
     } catch (error) {
-      return { success: false, message: error };
+      return { success: false, message: error.message };
     }
   }
 
@@ -29,7 +29,7 @@ export class TestsService {
       return { success: true, message: newTest };
     } catch (error) {
       console.log(error);
-      return { success: false, message: error };
+      return { success: false, message: error.message };
     }
   }
 
